@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="Xamurai.ListViewPage"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:tempsel="clr-namespace:Xamurai.TemplateSelectors"
+             xmlns:local="clr-namespace:Xamurai"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             x:Name="ListView"
+             Title="List View">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="DefaultTemplate">
+                <SwipeView
+                    IsEnabled="{Binding Source={x:Reference ListView}, Path=SwipeEnabled}">
+                    <SwipeView.RightItems>
+                        <SwipeItems>
+                            <SwipeItem
+                                Text="Delete"
+                                Command="{Binding Source={x:Reference ListView}, Path=DeleteCommand}"
+                                CommandParameter="{Binding Source={RelativeSource Self}, Path=BindingContext}"
+                                BackgroundColor="Red"/>
+                        </SwipeItems>
+                    </SwipeView.RightItems>
+                    <local:CarView Padding="0,10,0,0"
+                                   xct:TouchEffect.Command="{Binding ToggleCollapseCommand, Source={x:Reference _carView}}"
+                                   xct:TouchEffect.LongPressCommand="{Binding Source={x:Reference ListView}, Path=DeleteCommand}"
+                                   xct:TouchEffect.LongPressCommandParameter="{Binding Source={RelativeSource Self}, Path=BindingContext}" />
+                </SwipeView>
+
+            </DataTemplate>
+            <DataTemplate x:Key="MercedesTemplate">
+                <SwipeView
+                    IsEnabled="{Binding Source={x:Reference ListView}, Path=SwipeEnabled}">
+                    <SwipeView.RightItems>
+                        <SwipeItems>
+                            <SwipeItem
+                                Text="Delete"
+                                Command="{Binding Source={x:Reference ListView}, Path=DeleteCommand}"
+                                CommandParameter="{Binding Source={RelativeSource Self}, Path=BindingContext}"
+                                BackgroundColor="Red"/>
+                        </SwipeItems>
+                    </SwipeView.RightItems>
+                    <local:MercedesView Padding="0,10,0,0"
+                                        xct:TouchEffect.Command="{Binding ToggleCollapseCommand, Source={x:Reference _mercedesView}}"
+                                        xct:TouchEffect.LongPressCommand="{Binding Source={x:Reference ListView}, Path=DeleteCommand}"
+                                        xct:TouchEffect.LongPressCommandParameter="{Binding Source={RelativeSource Self}, Path=BindingContext}" />
+                </SwipeView>
+            </DataTemplate>
+            <tempsel:CarDataTemplateSelector
+                x:Key="CarTemplateSelector"
+                DefaultTemplate="{StaticResource DefaultTemplate}"
+                MercedesTemplate="{StaticResource MercedesTemplate}"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView>
+            <CollectionView
+                x:Name="MainCollectionView"
+                ItemTemplate="{StaticResource CarTemplateSelector}"
+			    ItemsSource="{Binding Cars}"
+			    SelectionMode="None">
+            </CollectionView>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

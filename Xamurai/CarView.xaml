@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView x:Class="Xamurai.CarView"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Xamurai"
+			 xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             x:Name="_carView"
+             BackgroundColor="White">
+	<ContentView.Content>
+		<xct:Expander
+			x:Name="MainExpander">
+            <xct:Expander.Header>
+                <StackLayout Margin="20,0,0,0"
+			             BackgroundColor="White"
+			             HorizontalOptions="Start"
+			             Orientation="Horizontal"
+			             VerticalOptions="Start">
+				<local:CarCircleView Margin="7,0,0,0"
+				                     Command="{Binding ToggleCollapseCommand, Source={x:Reference _carView}}"
+				                     HeightRequest="30"
+				                     HorizontalOptions="Start"
+				                     VerticalOptions="Start"
+				                     WidthRequest="30" />
+				<Label Margin="0,0,7,0"
+				       FontAttributes="Bold"
+				       Text="{Binding Name}"
+				       VerticalTextAlignment="Center" />
+			</StackLayout>
+            </xct:Expander.Header>
+			<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+					</Grid.RowDefinitions>
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="*" />
+						</Grid.RowDefinitions>
+						<Label HorizontalOptions="End"
+						       Text="{Binding Notes}"
+						       TextColor="Gray" />
+						<Label Grid.Row="1" Text="{Binding Description}" />
+					</Grid>
+				</Grid>
+        </xct:Expander>
+	</ContentView.Content>
+</ContentView>
